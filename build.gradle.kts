@@ -12,12 +12,17 @@ repositories {
     mavenCentral()
 }
 
+
+val kotestVersion =  "5.0.3"
+
 dependencies {
     testImplementation(kotlin("test"))
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 }
 
 tasks.test {
     useJUnit()
+    useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile>() {
