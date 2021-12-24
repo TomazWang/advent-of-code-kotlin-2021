@@ -38,12 +38,38 @@ internal class Day1Test {
         val result = Day1().partOne(input)
         
         
-        
         // -- Assert
         val expect = 7
         
         result shouldBe expect
         
         
+    }
+    
+    
+    @Test
+    fun part2Sample() {
+    
+        val input = listOf(
+            "199",
+            "200",
+            "208",
+            "210",
+            "200",
+            "207",
+            "240",
+            "269",
+            "260",
+            "263",
+        )
+    
+    
+        val result = Day1().part2(input)
+        
+        
+        val expect = 5
+        
+        result shouldBe expect
+    
     }
 }
