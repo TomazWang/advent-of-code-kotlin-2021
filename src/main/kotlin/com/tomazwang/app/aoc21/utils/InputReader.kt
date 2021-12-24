@@ -12,6 +12,11 @@ import java.io.File
 
 object InputReader {
     
+    fun readInput(day: Int, part: Int): InputData {
+        return InputData(readInputAsString(day, part))
+    }
+    
+    
     fun readInputAsString(day: Int, part: Int = 1): String {
         return readInputAsFile(day, part).readText()
     }
@@ -20,7 +25,7 @@ object InputReader {
         return readInputAsFile(day, part).readLines()
     }
     
-    fun readInputAsFile(day: Int, part: Int = 1): File {
+    private fun readInputAsFile(day: Int, part: Int = 1): File {
         val fileName = "day${day}-pt${1}.txt"
         return fromResource(fileName)
     }
@@ -29,4 +34,10 @@ object InputReader {
     private fun fromResource(fileName: String): File {
         return File(javaClass.classLoader.getResource("input/$fileName").toURI())
     }
+}
+
+
+data class InputData(val raw: String) {
+    val lines
+        get() = raw.lines().filter { it.isNotBlank() }
 }
