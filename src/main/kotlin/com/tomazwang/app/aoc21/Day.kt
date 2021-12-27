@@ -43,16 +43,23 @@ abstract class Day(
         
         println("--- PART ONE ---")
         val input = InputReader.readInput(dayNum, 1)
-        val result = part1(input)
         
-        println("Result: $result")
+        try {
+            val result = part1(input)
+            println("Result: $result")
+        } catch (e: NotImplementedError) {
+            println("<not implement>")
+        }
     }
     
     private fun runPart2() {
         println("--- PART TWO ---")
         val input = InputReader.readInput(dayNum, 2)
-        val result = part2(input)
-        
-        println("Result: $result")
+        try {
+            val result = part2(input)
+            println("Result: $result")
+        } catch (e: NotImplementedError) {
+            println("<not implement>")
+        }
     }
 }

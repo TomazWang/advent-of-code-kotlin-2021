@@ -20,7 +20,6 @@ class Day3 : Day(3, "Binary Diagnostic") {
         
         val bits = mutableListOf<Bit>()
         
-        
         val lines = input.lines.filter { it.isNotBlank() }
         
         
@@ -37,8 +36,6 @@ class Day3 : Day(3, "Binary Diagnostic") {
             }
         }
         
-        // println(bits)
-        
         val gammaBin = bits.map { it.most }
         val epsilonBin = bits.map { it.least }
         
@@ -49,7 +46,47 @@ class Day3 : Day(3, "Binary Diagnostic") {
     }
     
     override fun part2(input: InputData): String {
-        TODO("Not yet implemented")
+        
+        val lines = input.lines.filter { it.isNotBlank() }
+        
+        val oxygen = calAir(lines, true, 1)
+        val co2 = calAir(lines, false, 0)
+        
+        return (oxygen * co2).toString()
+        
+    }
+    
+    
+    private fun calAir(lines: List<String>, useMost: Boolean, tieBreaker: Int): Int {
+    
+        val bitsCount = lines.first().length
+        
+        var remainLines = lines
+        for (index in 0 until bitsCount) {
+        
+            if (remainLines.size == 1) {
+                break
+            }
+        
+            val bit = Bit()
+        
+            remainLines.forEach { line ->
+                when (line[index]) {
+                    '0' -> bit.addZero()
+                    '1' -> bit.addOne()
+                    else -> throw IllegalArgumentException()
+                }
+            }
+    
+            remainLines = if (bit.ones == bit.zeros) {
+                remainLines.filter { it[index].toString() == tieBreaker.toString() }
+            } else {
+                val next = if (useMost) bit.most else bit.least
+                remainLines.filter { it[index].toString() == next.toString() }
+            }
+        }
+        
+        return remainLines.first().toInt(2)
     }
     
     

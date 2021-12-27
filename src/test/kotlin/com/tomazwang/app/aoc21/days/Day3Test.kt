@@ -45,5 +45,28 @@ internal class Day3Test {
     
     @Test
     fun part2() {
+    
+    
+        val inputRaw = """
+            00100
+            11110
+            10110
+            10111
+            10101
+            01111
+            00111
+            11100
+            10000
+            11001
+            00010
+            01010
+        """.trimIndent()
+    
+        val input = InputData(inputRaw)
+    
+        val result = Day3().part2(input)
+    
+    
+        result shouldBe 230.toString()
     }
 }
