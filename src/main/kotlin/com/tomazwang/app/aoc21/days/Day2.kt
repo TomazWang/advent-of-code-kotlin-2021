@@ -18,15 +18,27 @@ class Day2 : Day(2, name = "Dive!") {
     override fun part1(input: InputData): String {
         val instructions = input.lines.map(::convertData)
         
-        val pos = instructions.fold(Position(0, 0)) { acc, curr ->
-            curr.first.move(acc, curr.second)
+        val init = Cruise()
+        
+        val finalCruise = instructions.fold(init) { currentCruise, nextInstruct ->
+            val (direction, step) = nextInstruct
+            currentCruise.move(direction, step)
         }
         
-        return pos.result.toString()
+        return finalCruise.result.toString()
     }
     
     override fun part2(input: InputData): String {
-        TODO("Not yet implemented")
+        val instructions = input.lines.map(::convertData)
+        
+        val init = Cruise(isAimEnable = true)
+        
+        val finalCruise = instructions.fold(init) { currentCruise, nextInstruct ->
+            val (direction, step) = nextInstruct
+            currentCruise.move(direction, step)
+        }
+        
+        return finalCruise.result.toString()
     }
     
     
@@ -43,26 +55,63 @@ class Day2 : Day(2, name = "Dive!") {
 
 
 data class Position(val horizontal: Int, val depth: Int) {
-    val result: Int
-        get() = depth * horizontal
+    override fun toString(): String = "Position: $horizontal, $depth"
 }
+
+data class Cruise(val pos: Position = Position(0, 0), val aim: Int = 0, val isAimEnable: Boolean = false) {
+    val result: Int
+        get() = pos.depth * pos.horizontal
+    
+    fun move(direction: Direction, step: Int): Cruise {
+        
+        return when (direction) {
+            Direction.Down -> {
+                val newPos = if (isAimEnable) pos else Position(pos.horizontal, pos.depth + step)
+                val newAim = if (isAimEnable) aim + step else 0
+                // println("down $step: move to $newPos, aim on $newAim")
+                Cruise(
+                    pos = newPos,
+                    aim = newAim,
+                    isAimEnable = isAimEnable
+                )
+            }
+            Direction.Up -> {
+    
+                val newPos = if (isAimEnable) pos else Position(pos.horizontal, pos.depth - step)
+                val newAim = if (isAimEnable) aim - step else 0
+                // println("up $step: move to $newPos, aim on $newAim")
+                
+                Cruise(
+                    pos = newPos,
+                    aim = newAim,
+                    isAimEnable = isAimEnable
+                )
+            }
+            Direction.Forward -> {
+                val newHor = pos.horizontal + step
+                val newDepth = pos.depth + aim * step
+                val newPos = Position(newHor, newDepth)
+    
+                val newAim = if (isAimEnable) aim else 0
+    
+                // println("forward $step: move to $newPos, aim on $newAim")
+                
+                Cruise(
+                    pos = newPos,
+                    aim = newAim,
+                    isAimEnable = isAimEnable
+                )
+            }
+        }
+    }
+}
+
 
 sealed class Direction {
     
-    abstract fun move(current: Position, step: Int): Position
-    
-    object Forward : Direction() {
-        override fun move(current: Position, step: Int) = Position(current.horizontal + step, current.depth)
-    }
-    
-    
-    object Up : Direction() {
-        override fun move(current: Position, step: Int) = Position(current.horizontal, current.depth - step)
-    }
-    
-    object Down : Direction() {
-        override fun move(current: Position, step: Int) = Position(current.horizontal, current.depth + step)
-    }
+    object Forward : Direction()
+    object Up : Direction()
+    object Down : Direction()
     
     companion object {
         fun fromString(name: String): Direction {
