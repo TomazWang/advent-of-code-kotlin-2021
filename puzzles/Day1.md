@@ -90,3 +90,9 @@ H: 792 (increased)
 In this example, there are 5 sums that are larger than the previous sum.
 
 **_Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?_**
+
+
+---
+
+
+[![Solution](https://img.shields.io/badge/Kotlin-Solution-blueviolet?style=for-the-badge&logo=Kotlin)](../src/main/kotlin/com/tomazwang/app/aoc21/days/Day1.kt)

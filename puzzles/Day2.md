@@ -64,3 +64,5 @@ Now, the above example does something different:
 
 Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 
+---
+[![Solution](https://img.shields.io/badge/Kotlin-Solution-blueviolet?style=for-the-badge&logo=Kotlin)](../src/main/kotlin/com/tomazwang/app/aoc21/days/Day2.kt)
